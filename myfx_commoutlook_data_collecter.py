@@ -1,4 +1,4 @@
-# Name   : myfx_commoutlook_data_scraper.py
+# Name   : myfx_commoutlook_data_collecter.py
 # Author : sanuja-gayantha (github.com) 
 # Date   : 2020/06/10
 # Columns: time, shortPercentage, longPercentage, shortVolume, longVolume, 
