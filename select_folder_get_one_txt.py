@@ -39,11 +39,19 @@ if os.path.exists(folder_full_path):
                 current_path_file_name = os.path.join(folder_full_path, file_name)
                 move_path_file_name = os.path.join(save_folder_full_path, file_name)
 
-                with open(current_path_file_name) as cfile:
-                  with open(move_path_file_name, 'a') as sfile:
-                    for line in cfile:
-                      sfile.write(line)
+                #read txt file data using pandas 
+                data = pd.read_csv(current_path_file_name, sep=",", header=None)
+                data.columns = ["time", "shortPercentage", "longPercentage", "shortVolume", "longVolume", "longPositions", "shortPositions", "totalPositions", "avgShortPrice", "avgLongPrice"]
 
+                data[['start', 'time', 'end']] = data["time"].str.split("'", expand=True)
+                data[['time']] = data.time
+                data.drop(['start', 'end'], axis=1, inplace=True)
+
+                data[['avgLongPrice', 'last']] = data["avgLongPrice"].str.split(")", expand=True)
+                data.drop(['last'], axis=1, inplace=True)
+
+                #append data to txt
+                data.to_csv(move_path_file_name, header=None, index=None, sep=',', mode='a')
 
                 count +=1
                 
